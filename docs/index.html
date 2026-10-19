@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="译页是一款使用自有 OpenAI 兼容 API 的 Chrome AI 翻译插件，支持整页翻译、划词翻译和网页总结。">
+    <meta name="theme-color" content="#17213a">
+    <title>译页 · 读懂每一个网页</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="#" aria-label="译页首页">
+        <span class="logo-mark">译</span>
+        <span>译页</span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span>
+        <span class="sr-only">打开导航</span>
+      </button>
+      <nav id="siteNav" class="site-nav" aria-label="主要导航">
+        <a href="#features">核心功能</a>
+        <a href="#privacy">开放兼容</a>
+        <a href="#install">安装指南</a>
+        <a class="nav-cta" href="#install">立即体验</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="release-note"><span></span>Chrome AI 翻译插件</p>
+          <h1>网页不该有<br><em>语言边界</em></h1>
+          <p class="hero-lead">
+            使用你自己的 AI 服务，把整个网页、选中的句子和冗长内容，
+            转化成真正读得懂的信息。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#install">开始安装</a>
+            <a class="button secondary" href="#features">
+              查看功能
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4"/></svg>
+            </a>
+          </div>
+          <ul class="hero-trust" aria-label="产品特点">
+            <li><i></i>配置只存本地</li>
+            <li><i></i>兼容 OpenAI 协议</li>
+            <li><i></i>中英双向翻译</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-label="译页插件效果演示">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="browser-window">
+            <div class="browser-bar">
+              <div class="traffic-lights"><i></i><i></i><i></i></div>
+              <div class="address">article.example.com</div>
+              <div class="browser-menu">•••</div>
+            </div>
+            <div class="article">
+              <div class="article-meta">
+                <span>Technology</span>
+                <span>6 min read</span>
+              </div>
+              <div class="article-title source-line">How intelligence becomes useful</div>
+              <div class="article-title translated-line">智能如何真正发挥价值</div>
+              <div class="text-row">
+                <span class="text-line long"></span>
+                <span class="translation-chip">已翻译</span>
+              </div>
+              <span class="text-line full"></span>
+              <span class="text-line medium"></span>
+              <div class="selection-demo">
+                <span>Information should be accessible to everyone.</span>
+                <div class="selection-popover">
+                  <small>译页 · 划词翻译</small>
+                  <strong>信息应该对每个人都触手可及。</strong>
+                </div>
+              </div>
+              <span class="text-line full"></span>
+              <span class="text-line short"></span>
+            </div>
+          </div>
+          <div class="floating-badge">
+            <span>译</span>
+            <div><strong>整页翻译完成</strong><small>已处理 48 段文字</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="statement" aria-label="产品介绍">
+        <p>为阅读而设计</p>
+        <blockquote>
+          不跳转、不复制粘贴、<br>
+          不打断你正在发生的<span>理解。</span>
+        </blockquote>
+        <div class="statement-detail">
+          <p>
+            译页直接工作在当前网页中，保留原有排版、上下文与阅读节奏。
+            从一小段陌生表达，到一整篇专业文章，都能在原地完成理解。
+          </p>
+          <a href="#features">看看它如何工作 <span>↓</span></a>
+        </div>
+      </section>
+
+      <section id="features" class="features-section">
+        <header class="section-intro">
+          <span class="section-index">01 / 核心功能</span>
+          <h2>三种方式，<br>读懂一个网页</h2>
+          <p>每项功能都围绕同一件事：让信息更快进入你的思考，而不是增加新的操作步骤。</p>
+        </header>
+
+        <article class="feature feature-page">
+          <div class="feature-copy">
+            <span class="feature-number">01</span>
+            <div class="feature-icon page-icon">
+              <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 6h11M9.5 3v3m2 0c-.8 4-3.2 7.2-7 9m3-5c1.3 2 3.2 3.7 5.5 5M16 23l4-11 4 11m-6.5-4h5"/></svg>
+            </div>
+            <h3>全页面翻译</h3>
+            <p>智能识别可读文本，分批翻译并原位替换。页面结构和视觉层级保持不变，还可随时一键还原原文。</p>
+            <ul>
+              <li>自动识别原文语言</li>
+              <li>保留链接、数字和专有名词</li>
+              <li>翻译失败时安全还原</li>
+            </ul>
+          </div>
+          <div class="feature-demo page-demo" aria-hidden="true">
+            <div class="demo-toolbar">
+              <span></span>
+              <span class="demo-action">翻译当前网页</span>
+            </div>
+            <div class="parallel-copy">
+              <div class="copy-column muted-copy">
+                <small>ORIGINAL</small>
+                <strong>A better way to read the web.</strong>
+                <p>Knowledge lives everywhere. Language should never stand between you and a new idea.</p>
+              </div>
+              <div class="translation-rail">
+                <i></i><i></i><i></i>
+              </div>
+              <div class="copy-column">
+                <small>译文</small>
+                <strong>用更好的方式阅读网络。</strong>
+                <p>知识存在于每个角落。语言不该阻隔你与一个新想法的相遇。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature feature-selection">
+          <div class="feature-copy">
+            <span class="feature-number">02</span>
+            <div class="feature-icon selection-icon">划</div>
+            <h3>划词翻译</h3>
+            <p>选中不理解的词句，轻点浮动按钮，译文就在原文旁出现。无需离开页面，也无需打开新标签。</p>
+            <ul>
+              <li>轻量浮窗，不遮挡正文</li>
+              <li>支持长句与段落</li>
+              <li>关闭即走，不留干扰</li>
+            </ul>
+          </div>
+          <div class="feature-demo selection-demo-large" aria-hidden="true">
+            <div class="reading-lines">
+              <span></span><span></span>
+              <p>The best tools disappear into the work, <mark>helping without interrupting.</mark></p>
+              <span></span><span class="small-line"></span>
+            </div>
+            <div class="cursor-pointer"></div>
+            <div class="translate-bubble">
+              <header><span>译页 · 划词翻译</span><i>×</i></header>
+              <p>最好的工具会融入工作之中，在不打断你的情况下提供帮助。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature feature-summary">
+          <div class="feature-copy">
+            <span class="feature-number">03</span>
+            <div class="feature-icon summary-icon">≋</div>
+            <h3>网页总结</h3>
+            <p>面对长文章时，先获得准确概括和关键要点，再决定是否深入阅读。总结语言跟随你的目标语言设置。</p>
+            <ul>
+              <li>两三句话快速概括</li>
+              <li>自动提炼 3—6 个要点</li>
+              <li>防止网页内容注入指令</li>
+            </ul>
+          </div>
+          <div class="feature-demo summary-demo" aria-hidden="true">
+            <div class="summary-top">
+              <span>网页摘要</span>
+              <i>已完成</i>
+            </div>
+            <p>本文讨论了 AI 工具如何降低跨语言信息获取的门槛，并强调流畅阅读体验的重要性。</p>
+            <ul>
+              <li><span>01</span>语言障碍会显著增加信息获取成本</li>
+              <li><span>02</span>原位翻译能保留文章的上下文结构</li>
+              <li><span>03</span>用户应拥有模型与数据的控制权</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section id="privacy" class="open-section">
+        <div class="open-copy">
+          <span class="section-index light">02 / 开放兼容</span>
+          <h2>你的模型，<br>你的选择</h2>
+          <p>
+            译页兼容 OpenAI Chat Completions 协议。填写 API Key、Base URL 和模型名称，
+            即可连接 DeepSeek、OpenAI 及其他兼容服务。
+          </p>
+          <div class="privacy-points">
+            <div><strong>本地保存</strong><span>配置与历史仅存于浏览器</span></div>
+            <div><strong>真实统计</strong><span>Token 数据来自 API usage</span></div>
+          </div>
+        </div>
+        <div class="config-window" aria-label="API 配置界面示意">
+          <div class="config-head">
+            <span class="mini-logo">译</span>
+            <div><strong>连接你的 AI</strong><small>OpenAI Compatible</small></div>
+            <i>已加密</i>
+          </div>
+          <label><span>API Key</span><div>••••••••••••••••••••••••</div></label>
+          <label><span>Base URL</span><div>https://api.deepseek.com</div></label>
+          <label><span>模型</span><div>deepseek-chat</div></label>
+          <span class="config-status">连接成功 <b>✓</b></span>
+        </div>
+      </section>
+
+      <section id="install" class="install-section">
+        <header class="section-intro install-intro">
+          <span class="section-index">03 / 安装指南</span>
+          <h2>三步开始阅读</h2>
+          <p>译页是 Manifest V3 扩展，无需构建工具。加载项目文件夹后即可使用。</p>
+        </header>
+        <ol class="install-steps">
+          <li>
+            <span class="step-number">1</span>
+            <div class="step-visual folder-visual" aria-hidden="true">
+              <div class="folder"><i></i><span>译页</span></div>
+            </div>
+            <h3>准备插件目录</h3>
+            <p>下载并解压项目，保留完整文件结构。</p>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <div class="step-visual browser-visual" aria-hidden="true">
+              <div class="mini-browser">
+                <span>开发者模式</span>
+                <i></i>
+                <span class="load-button">加载已解压的扩展程序</span>
+              </div>
+            </div>
+            <h3>加载到 Chrome</h3>
+            <p>打开扩展管理页，启用开发者模式并选择插件目录。</p>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <div class="step-visual key-visual" aria-hidden="true">
+              <div class="key-card"><span>API KEY</span><i>••••••••••••</i><b>✓</b></div>
+            </div>
+            <h3>连接 AI 服务</h3>
+            <p>在 popup 或管理面板中填写服务配置并测试连接。</p>
+          </li>
+        </ol>
+        <div class="install-action">
+          <div>
+            <span>Chrome 扩展管理页</span>
+            <code>chrome://extensions/</code>
+          </div>
+          <button id="copyAddress" class="button primary" type="button" data-address="chrome://extensions/">
+            复制地址
+          </button>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="cta-symbol" aria-hidden="true">
+          <span>译</span><span>读</span>
+        </div>
+        <p>从下一篇文章开始</p>
+        <h2>让语言退到阅读之后</h2>
+        <a class="button light-button" href="#install">安装译页</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="wordmark footer-wordmark" href="#"><span class="logo-mark">译</span><span>译页</span></a>
+      <p>读懂，不打断阅读。</p>
+      <span>Manifest V3 · OpenAI Compatible</span>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">地址已复制</div>
+    <script src="script.js"></script>
+  </body>
+</html>
