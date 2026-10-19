@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "译页 · AI 网页翻译",
+  "version": "1.0.0",
+  "description": "使用你自己的 OpenAI 兼容 API，翻译网页、划词释义并总结内容。",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "译页",
+    "default_popup": "src/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "commands": {
+    "translate-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+T"
+      },
+      "description": "翻译当前网页"
+    }
+  }
+}
