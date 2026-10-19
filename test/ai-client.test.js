@@ -5,7 +5,8 @@ import {
   extractJson,
   normalizeBaseUrl,
   parseTranslations,
-  requestChat
+  requestChat,
+  requestChatDetailed
 } from "../src/ai-client.js";
 
 test("normalizes OpenAI-compatible base URLs", () => {
@@ -58,11 +59,12 @@ test("sends a compatible chat completions request", async (context) => {
   globalThis.fetch = async (url, options) => {
     captured = { url, options };
     return new Response(JSON.stringify({
-      choices: [{ message: { content: "OK" } }]
+      choices: [{ message: { content: "OK" } }],
+      usage: { prompt_tokens: 8, completion_tokens: 1, total_tokens: 9 }
     }), { status: 200, headers: { "Content-Type": "application/json" } });
   };
 
-  const result = await requestChat(
+  const result = await requestChatDetailed(
     {
       apiKey: "test-key",
       baseUrl: "https://api.example.com/v1/",
@@ -71,7 +73,8 @@ test("sends a compatible chat completions request", async (context) => {
     [{ role: "user", content: "ping" }]
   );
 
-  assert.equal(result, "OK");
+  assert.equal(result.content, "OK");
+  assert.equal(result.usage.total_tokens, 9);
   assert.equal(captured.url, "https://api.example.com/v1/chat/completions");
   assert.equal(captured.options.headers.Authorization, "Bearer test-key");
   assert.equal(JSON.parse(captured.options.body).model, "test-model");

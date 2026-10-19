@@ -115,6 +115,7 @@ async function waitFor(check, label, timeout = 30000) {
 
 let fixtureCdp;
 let popupCdp;
+let optionsCdp;
 let browserCdp;
 
 try {
@@ -264,9 +265,56 @@ try {
     60000
   );
   console.log(`✓ 划词翻译：${selectionResult.slice(0, 40)}…`);
+
+  const optionsTarget = await createTarget(`chrome-extension://${extensionId}/src/options.html`);
+  optionsCdp = new Cdp(optionsTarget.webSocketDebuggerUrl);
+  await optionsCdp.send("Runtime.enable");
+  await waitFor(
+    () => evaluate(
+      optionsCdp,
+      "document.readyState === 'complete' && document.querySelector('#connectionBadge')?.textContent.includes('已连接')"
+    ),
+    "管理面板加载"
+  );
+  await waitFor(
+    () => evaluate(
+      optionsCdp,
+      "document.querySelector('#historyList').children.length >= 2 && Number(document.querySelector('#totalTokens').textContent.replace(/,/g, '')) > 0"
+    ),
+    "历史与 Token 统计"
+  );
+  await evaluate(optionsCdp, "document.querySelector('#swapLanguages').click()");
+  await evaluate(optionsCdp, "document.querySelector('#apiForm').requestSubmit()");
+  await waitFor(
+    () => evaluate(
+      optionsCdp,
+      "document.querySelector('#pageStatus').textContent.includes('配置已保存') && document.querySelector('#sourceLanguage').value === 'zh-CN' && document.querySelector('#targetLanguage').value === 'en'"
+    ),
+    "管理面板语言切换"
+  );
+  console.log("✓ 管理面板配置、语言切换、翻译历史与 Token 统计");
+
+  if (process.env.YIYE_DASHBOARD_SCREENSHOT_PATH) {
+    await optionsCdp.send("Emulation.setDeviceMetricsOverride", {
+      width: 1280,
+      height: 900,
+      deviceScaleFactor: 1,
+      mobile: false
+    });
+    const dashboardScreenshot = await optionsCdp.send("Page.captureScreenshot", {
+      format: "png",
+      fromSurface: true
+    });
+    await writeFile(
+      process.env.YIYE_DASHBOARD_SCREENSHOT_PATH,
+      dashboardScreenshot.data,
+      "base64"
+    );
+  }
 } finally {
   fixtureCdp?.close();
   popupCdp?.close();
+  optionsCdp?.close();
   if (browserCdp) {
     await Promise.race([
       browserCdp.send("Browser.close").catch(() => {}),

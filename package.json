@@ -1,12 +1,12 @@
 {
   "name": "yiye-ai-translator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "description": "OpenAI-compatible Chrome AI translation extension",
   "scripts": {
-    "test": "node --test test/ai-client.test.js",
-    "check": "node --check src/ai-client.js && node --check src/background.js && node --check src/content.js && node --check src/popup.js && node --check scripts/api-smoke-test.mjs && node --check scripts/browser-smoke-test.mjs",
+    "test": "node --test test/ai-client.test.js test/data-store.test.js",
+    "check": "node --check src/ai-client.js && node --check src/data-store.js && node --check src/background.js && node --check src/content.js && node --check src/popup.js && node --check src/options.js && node --check scripts/api-smoke-test.mjs && node --check scripts/browser-smoke-test.mjs",
     "test:api": "node scripts/api-smoke-test.mjs",
     "test:browser": "node scripts/browser-smoke-test.mjs"
   },

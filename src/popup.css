@@ -482,6 +482,24 @@ button.feature:hover {
   font-size: 9px;
 }
 
+.dashboard-link {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 10px 1px 2px;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.dashboard-link span:last-child {
+  color: var(--blue);
+  font-size: 10px;
+}
+
 button:disabled {
   cursor: wait;
   opacity: .62;

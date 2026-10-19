@@ -18,7 +18,8 @@ const elements = {
   toggleApiKey: document.querySelector("#toggleApiKey"),
   copySummary: document.querySelector("#copySummary"),
   testConnection: document.querySelector("#testConnection"),
-  saveSettings: document.querySelector("#saveSettings")
+  saveSettings: document.querySelector("#saveSettings"),
+  openDashboard: document.querySelector("#openDashboard")
 };
 
 function showStatus(message, type = "") {
@@ -237,6 +238,10 @@ elements.copySummary.addEventListener("click", async () => {
   setTimeout(() => {
     elements.copySummary.textContent = "复制";
   }, 1200);
+});
+
+elements.openDashboard.addEventListener("click", () => {
+  chrome.runtime.openOptionsPage();
 });
 
 chrome.runtime.onMessage.addListener((message) => {

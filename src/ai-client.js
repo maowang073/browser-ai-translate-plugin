@@ -87,7 +87,7 @@ export function parseTranslations(rawText, sourceItems) {
   });
 }
 
-export async function requestChat(settings, messages, options = {}) {
+export async function requestChatDetailed(settings, messages, options = {}) {
   validateSettings(settings);
   const response = await fetch(createChatEndpoint(settings.baseUrl), {
     method: "POST",
@@ -115,10 +115,18 @@ export async function requestChat(settings, messages, options = {}) {
   if (typeof content !== "string" || !content.trim()) {
     throw new Error("API 未返回有效内容");
   }
-  return content.trim();
+  return {
+    content: content.trim(),
+    usage: payload?.usage || {}
+  };
 }
 
-export async function translateItems(settings, items, sourceLanguage, targetLanguage) {
+export async function requestChat(settings, messages, options = {}) {
+  const result = await requestChatDetailed(settings, messages, options);
+  return result.content;
+}
+
+export async function translateItemsDetailed(settings, items, sourceLanguage, targetLanguage) {
   const sourceName = LANGUAGE_NAMES[sourceLanguage] || sourceLanguage;
   const targetName = LANGUAGE_NAMES[targetLanguage] || targetLanguage;
   const sourcePayload = items.map(({ id, text }) => ({ id, text }));
@@ -138,13 +146,21 @@ export async function translateItems(settings, items, sourceLanguage, targetLang
       content: JSON.stringify(sourcePayload)
     }
   ];
-  const raw = await requestChat(settings, messages, {
+  const result = await requestChatDetailed(settings, messages, {
     maxTokens: Math.min(8192, Math.max(1024, Math.ceil(JSON.stringify(sourcePayload).length * 1.8)))
   });
-  return parseTranslations(raw, items);
+  return {
+    translations: parseTranslations(result.content, items),
+    usage: result.usage
+  };
 }
 
-export async function summarizePage(settings, page, outputLanguage = "zh-CN") {
+export async function translateItems(settings, items, sourceLanguage, targetLanguage) {
+  const result = await translateItemsDetailed(settings, items, sourceLanguage, targetLanguage);
+  return result.translations;
+}
+
+export async function summarizePageDetailed(settings, page, outputLanguage = "zh-CN") {
   const languageName = LANGUAGE_NAMES[outputLanguage] || outputLanguage;
   const messages = [
     {
@@ -162,5 +178,18 @@ export async function summarizePage(settings, page, outputLanguage = "zh-CN") {
       content: `标题：${page.title}\n网址：${page.url}\n\n正文：\n${page.text}`
     }
   ];
-  return requestChat(settings, messages, { maxTokens: 1600, temperature: 0.3 });
+  const result = await requestChatDetailed(
+    settings,
+    messages,
+    { maxTokens: 1600, temperature: 0.3 }
+  );
+  return {
+    summary: result.content,
+    usage: result.usage
+  };
+}
+
+export async function summarizePage(settings, page, outputLanguage = "zh-CN") {
+  const result = await summarizePageDetailed(settings, page, outputLanguage);
+  return result.summary;
 }

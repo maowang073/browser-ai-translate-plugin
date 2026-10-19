@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>译页管理面板</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <a class="brand" href="#overview" aria-label="译页管理面板">
+          <span class="brand-mark">译</span>
+          <span><strong>译页</strong><small>管理面板</small></span>
+        </a>
+        <nav aria-label="面板导航">
+          <a class="active" href="#overview"><span>⌂</span>使用概览</a>
+          <a href="#settings"><span>⌁</span>服务配置</a>
+          <a href="#history"><span>◷</span>翻译历史</a>
+        </nav>
+        <div class="sidebar-note">
+          <span class="privacy-dot"></span>
+          <p>所有配置、统计和历史仅保存在当前浏览器。</p>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="page-head">
+          <div>
+            <p id="todayLabel" class="date-label"></p>
+            <h1>管理面板</h1>
+            <p>配置翻译服务，了解每一次阅读的消耗。</p>
+          </div>
+          <div class="head-actions">
+            <span id="connectionBadge" class="connection-badge">未配置</span>
+            <button id="openPopupHelp" class="quiet-button" type="button">如何使用</button>
+          </div>
+        </header>
+
+        <p id="pageStatus" class="page-status" role="status" aria-live="polite"></p>
+
+        <section id="overview" class="section overview">
+          <div class="section-heading">
+            <div>
+              <h2>Token 使用概览</h2>
+              <p>统计来自 API 返回的真实 usage 数据</p>
+            </div>
+            <button id="resetUsage" class="text-button danger" type="button">重置统计</button>
+          </div>
+
+          <div class="metric-strip">
+            <article class="primary-metric">
+              <span>累计 Token</span>
+              <strong id="totalTokens">0</strong>
+              <small id="requestCount">0 次 API 请求</small>
+            </article>
+            <article>
+              <span>输入 Token</span>
+              <strong id="promptTokens">0</strong>
+              <small>提示词与网页原文</small>
+            </article>
+            <article>
+              <span>输出 Token</span>
+              <strong id="completionTokens">0</strong>
+              <small>翻译与总结结果</small>
+            </article>
+          </div>
+
+          <div class="usage-detail">
+            <div class="operation-list">
+              <h3>按功能分布</h3>
+              <div class="operation-row">
+                <span><i class="operation-icon translation">译</i>网页与划词翻译</span>
+                <strong id="translationTokens">0</strong>
+              </div>
+              <div class="operation-row">
+                <span><i class="operation-icon summary">≋</i>网页总结</span>
+                <strong id="summaryTokens">0</strong>
+              </div>
+              <div class="operation-row">
+                <span><i class="operation-icon connection">·</i>连接测试</span>
+                <strong id="connectionTokens">0</strong>
+              </div>
+            </div>
+            <div class="daily-usage">
+              <div class="chart-head">
+                <h3>近 7 天使用量</h3>
+                <span>Token</span>
+              </div>
+              <div id="usageChart" class="usage-chart" aria-label="近 7 天 Token 使用量"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="settings" class="section settings-section">
+          <div class="section-heading">
+            <div>
+              <h2>翻译服务</h2>
+              <p>兼容 OpenAI Chat Completions 协议</p>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <form id="apiForm" class="settings-block">
+              <div class="block-title">
+                <span>01</span>
+                <div><h3>API 配置</h3><p>连接你的模型服务</p></div>
+              </div>
+              <label>
+                <span>API Key</span>
+                <div class="password-field">
+                  <input id="apiKey" type="password" autocomplete="off" placeholder="sk-…" spellcheck="false">
+                  <button id="toggleApiKey" type="button">显示</button>
+                </div>
+              </label>
+              <label>
+                <span>Base URL</span>
+                <input id="baseUrl" type="url" placeholder="https://api.openai.com/v1" spellcheck="false">
+              </label>
+              <label>
+                <span>模型</span>
+                <input id="model" type="text" placeholder="gpt-4o-mini" spellcheck="false">
+              </label>
+              <div class="form-actions">
+                <button id="testConnection" class="secondary-button" type="button">测试连接</button>
+                <button id="saveSettings" class="primary-button" type="submit">保存配置</button>
+              </div>
+            </form>
+
+            <div class="settings-block language-block">
+              <div class="block-title">
+                <span>02</span>
+                <div><h3>默认翻译语言</h3><p>popup 会同步使用此设置</p></div>
+              </div>
+              <div class="language-pair">
+                <label>
+                  <span>源语言</span>
+                  <select id="sourceLanguage">
+                    <option value="auto">自动识别</option>
+                    <option value="zh-CN">简体中文</option>
+                    <option value="en">English</option>
+                  </select>
+                </label>
+                <button id="swapLanguages" class="swap-button" type="button" aria-label="交换语言">⇄</button>
+                <label>
+                  <span>目标语言</span>
+                  <select id="targetLanguage">
+                    <option value="zh-CN">简体中文</option>
+                    <option value="en">English</option>
+                  </select>
+                </label>
+              </div>
+              <div class="language-preview">
+                <span id="sourcePreview">自动识别</span>
+                <i></i>
+                <span id="targetPreview">简体中文</span>
+              </div>
+              <p class="field-note">修改语言后点击“保存配置”统一保存。</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="history" class="section history-section">
+          <div class="section-heading history-heading">
+            <div>
+              <h2>翻译历史</h2>
+              <p id="historyCount">还没有翻译记录</p>
+            </div>
+            <div class="history-tools">
+              <input id="historySearch" type="search" placeholder="搜索标题或译文">
+              <select id="historyFilter" aria-label="筛选历史类型">
+                <option value="all">全部类型</option>
+                <option value="page">整页翻译</option>
+                <option value="selection">划词翻译</option>
+              </select>
+              <button id="clearHistory" class="text-button danger" type="button">清空</button>
+            </div>
+          </div>
+          <div id="historyList" class="history-list"></div>
+          <div id="historyEmpty" class="empty-state">
+            <span>译</span>
+            <h3>翻译过的内容会出现在这里</h3>
+            <p>在任意网页使用整页翻译或划词翻译，即可生成历史记录。</p>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>

@@ -102,6 +102,8 @@
 
     const batches = createBatches(nodes);
     let completed = 0;
+    const sourcePreview = [];
+    const translatedPreview = [];
     notifyProgress({ status: "translating", completed, total: nodes.length });
 
     try {
@@ -121,11 +123,17 @@
           response.translations.map((item) => [String(item.id), item.text])
         );
         batch.forEach((entry, index) => {
+          if (sourcePreview.join(" ").length < 1200) {
+            sourcePreview.push(entry.text);
+          }
           if (!originalText.has(entry.node)) {
             originalText.set(entry.node, entry.node.nodeValue);
           }
           const translated = translations.get(String(completed + index));
           if (translated) {
+            if (translatedPreview.join(" ").length < 1200) {
+              translatedPreview.push(translated);
+            }
             const leading = entry.node.nodeValue.match(/^\s*/)?.[0] || "";
             const trailing = entry.node.nodeValue.match(/\s*$/)?.[0] || "";
             entry.node.nodeValue = `${leading}${translated}${trailing}`;
@@ -136,6 +144,19 @@
         completed += batch.length;
         notifyProgress({ status: "translating", completed, total: nodes.length });
       }
+      await sendRuntimeMessage({
+        type: "RECORD_HISTORY",
+        entry: {
+          kind: "page",
+          title: document.title,
+          url: location.href,
+          sourceLanguage,
+          targetLanguage,
+          sourceText: sourcePreview.join(" "),
+          translatedText: translatedPreview.join(" "),
+          segmentCount: completed
+        }
+      });
       notifyProgress({ status: "done", completed, total: nodes.length });
       return { translated: completed, batches: batches.length };
     } catch (error) {
@@ -240,7 +261,12 @@
       try {
         const response = await sendRuntimeMessage({
           type: "TRANSLATE_BATCH",
-          items: [{ id: "selection", text: selectionText }]
+          items: [{ id: "selection", text: selectionText }],
+          historyContext: {
+            kind: "selection",
+            title: document.title,
+            url: location.href
+          }
         });
         result.textContent = response.translations[0]?.text || "没有获得译文";
         result.classList.remove("loading");
