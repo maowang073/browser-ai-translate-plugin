@@ -1369,9 +1369,16 @@ button {
   font-size: 12px;
 }
 
+.install-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .install-action .button {
   min-height: 40px;
-  padding: 0 18px;
+  padding: 0 16px;
   font-size: 10px;
 }
 
@@ -1873,8 +1880,9 @@ button {
     gap: 15px;
   }
 
+  .install-buttons,
   .install-action .button {
-    min-width: 100px;
+    width: 100%;
   }
 
   .final-cta {
